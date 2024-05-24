@@ -2,25 +2,26 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
-import xgboost  # Ensure xgboost is imported
+import xgboost
 from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
 from pandasai.connectors import PandasConnector
+import os
 
-# Function to load the ML model and scaler
+# Load Model ML, minmax dan kolom
 def load_ml_model():
     model = joblib.load('XGBoost_best_model.pkl')
     scaler = joblib.load('minmax_scaler.pkl')
     column_names = joblib.load('column_names.pkl')
     return model, scaler, column_names
 
-# Function for the ML prediction page
+# Page prediksi
 def ml_prediction_page():
     model, scaler, column_names = load_ml_model()
 
-    st.write("## Prediksi Biaya Total dengan ML")
+    st.write("## Prediksi Biaya Total Pasien dengan Machine Learning")
 
-    # Define the widgets
+    # widgets
     drug_quantity = st.number_input('Jumlah Obat:', value=1)
     days_diff = st.number_input('Lama hari:', value=1.0, format="%.1f")
 
@@ -64,7 +65,7 @@ def ml_prediction_page():
     lab_values = {f'lab_{test}': 0 for test in ['Hematologi', 'Kimia Darah', 'Serologi']}
     lab_values[f'lab_{lab}'] = 1
 
-    # Collect all input data
+    # semua input
     new_data = {
         'drug_quantity': drug_quantity,
         'days_diff': days_diff,
@@ -82,23 +83,23 @@ def ml_prediction_page():
         **lab_values
     }
 
-    # Convert to DataFrame
+    # Convert ke DataFrame
     new_input_df = pd.DataFrame([new_data])
     new_input_df = new_input_df.reindex(columns=column_names, fill_value=0)
 
-    # Scale the input data
+    # Scale input data
     new_input_scaled = scaler.transform(new_input_df)
 
-    # Predict
+    # Prediki
     if st.button("Predict"):
         predictions = model.predict(new_input_scaled)
         st.write("Predictions:", predictions[0])
 
-# Function for the LLM interaction page
+# fungsi untuk LLM interaction page
 def llm_interaction_page():
-    # Initialize the OpenAI LLM
+    # inisialisasi ai
     llm_t0 = OpenAI(
-        api_token="sk-proj-0NA2KRfDMuRpqPlfWXRZT3BlbkFJSwQyGg5HuFfd3jWH8CZC",
+        api_token=os.getenv("OPENAI_API_KEY"),
         temperature=0,
         seed=26
     )
@@ -124,10 +125,10 @@ def llm_interaction_page():
         'is_DBD': 'A boolean indicating whether the patient was diagnosed with dengue fever'
     }
 
-    # Load the dataset
-    df = pd.read_csv('C:/Users/RafiWangsaSeniang/Desktop/STREAM/mini_data_rev.csv')
+    # Load dataset
+    df = pd.read_csv('mini_data_rev.csv')
 
-    # Create the PandasConnector and SmartDataframe
+    #  Buat PandasConnector and SmartDataframe
     connector = PandasConnector({"original_df": df}, field_descriptions=field_descriptions)
     sdf = SmartDataframe(connector, config={"llm": llm_t0, "enable_cache": False})
 
@@ -137,11 +138,11 @@ def llm_interaction_page():
     Ini merupakan bagian percobaan jika dibuat bentuk web dan untuk file csv nya menggunakan csv yang sudah disederhanakan.
     """)
 
-    # Display the logo
-    logo_path = 'C:/Users/RafiWangsaSeniang/Desktop/STREAM/Website_Logo_Bithealth_.png'
+    # Display logo Bithealth
+    logo_path = 'Website_Logo_Bithealth_.png'
     st.image(logo_path, use_column_width=True)
 
-    # Text input for user query
+    # Text input user query
     user_query = st.text_input("Ingin tahu apa?")
 
     def display_plot(image_path):
@@ -153,7 +154,7 @@ def llm_interaction_page():
     if st.button("Kirim"):
         if user_query:
             try:
-                # Get the response from PandasAI
+                # get response  PandasAI
                 response = sdf.chat(user_query)
                 if isinstance(response, str) and response.endswith('.png'):
                     display_plot(response)
@@ -161,12 +162,12 @@ def llm_interaction_page():
                     st.write("Jawaban:")
                     st.write(response)
             except Exception as e:
-                st.write(f"An error occurred: {e}")
+                st.write(f"error: {e}")
         else:
-            st.write("Please enter a query.")
+            st.write("Masukan instruksi atau pertanyaan mengenai data RS.")
 
-# Main app
-st.set_page_config(page_title="Tes LLM Final Project Kelompok 01", page_icon="C:/Users/RafiWangsaSeniang/Desktop/STREAM/Website_Logo_Bithealth_.png")
+# Main app utama
+st.set_page_config(page_title="Tes LLM Final Project Kelompok 01", page_icon="Website_Logo_Bithealth_.png")
 
 st.title("Tes LLM Final Project Kelompok 01")
 
@@ -174,10 +175,10 @@ st.write("""
 Ini merupakan halaman utama. Silakan pilih salah satu dari opsi berikut:
 """)
 
-# Sidebar for navigation
+# Sidebar
 page = st.sidebar.radio("Pilih Halaman", ("Prediksi Biaya Total dengan ML", "Tanya Bit AI"))
 
-# Display the selected page
+# pilihan page
 if page == "Prediksi Biaya Total dengan ML":
     ml_prediction_page()
 elif page == "Tanya Bit AI":
