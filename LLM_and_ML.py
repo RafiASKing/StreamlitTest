@@ -133,7 +133,7 @@ def display_image(image_path, width=300, center=False):
 # Function LLM interaction page
 def llm_interaction_page():
     # Initialize OpenAI LLM
-    llm_t0 = OpenAI(api_token="OPENAI_API_KEY", temperature=0, seed=26)
+    llm_t0 = OpenAI(os.getenv("OPENAI_API_KEY"), temperature=0, seed=26)
 
     # Load dataset
     @st.cache_data
