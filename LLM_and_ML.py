@@ -131,10 +131,10 @@ def display_image(image_path, width=300, center=False):
     else:
         st.image(image_path, width=width)
 
-# Function LLM interaction page
+# Function to load the LLM interaction page
 def llm_interaction_page():
     # Initialize OpenAI LLM
-    llm_t0 = OpenAI(os.getenv("OPENAI_API_KEY"), temperature=0, seed=26)
+    llm_t0 = OpenAI(api_token=os.getenv("OPENAI_API_KEY"), temperature=0, seed=26)
 
     # Load dataset
     @st.cache_data
@@ -143,7 +143,7 @@ def llm_interaction_page():
     
     df = load_data()
 
-    # Create PandasConnector dan SmartDataframe
+    # Create PandasConnector and SmartDataframe
     connector = PandasConnector({"original_df": df})
     sdf = SmartDataframe(connector, config={"llm": llm_t0, "conversational": False})
 
@@ -159,13 +159,21 @@ def llm_interaction_page():
 
     user_query = st.text_input("Kamu dapat query dan bertanya mengenai data rumah sakit disini", key="user_query")
 
+    def display_plot(image_path):
+        """Display the image in Streamlit."""
+        with open(image_path, "rb") as image_file:
+            image_bytes = image_file.read()
+            st.image(image_bytes)
+
     if st.button("Kirim"):
         if user_query:
             try:
                 # Get the response from PandasAI
                 with get_openai_callback() as cb:
                     response = sdf.chat(user_query)
-                    if response:
+                    if isinstance(response, str) and response.endswith('.png'):
+                        display_plot(response)
+                    else:
                         st.write("**Jawaban:**")
                         st.write(response)
                         st.write("================================================")
