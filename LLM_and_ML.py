@@ -8,6 +8,7 @@ from pandasai.llm import OpenAI
 from pandasai.connectors import PandasConnector
 from pandasai.helpers.openai_info import get_openai_callback
 from datetime import datetime
+import os
 
 # Set Konfigurasi Page
 st.set_page_config(page_title="Tes LLM Final Project Kelompok 01", page_icon="Website_Logo_Bithealth_.png")
