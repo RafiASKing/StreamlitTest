@@ -2,7 +2,6 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
-import xgboost
 from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
 from pandasai.connectors import PandasConnector
@@ -161,9 +160,7 @@ def llm_interaction_page():
 
     def display_plot(image_path):
         """Display the image in Streamlit."""
-        with open(image_path, "rb") as image_file:
-            image_bytes = image_file.read()
-            st.image(image_bytes)
+        st.image(image_path)
 
     if st.button("Kirim"):
         if user_query:
