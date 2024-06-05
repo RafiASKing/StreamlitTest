@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.stApp {
+    max-width: 100%;
+    margin: 0;
+    padding: 5px 10px;  /* Further reduced the padding to minimize the gap */
+}
+
+h1, h2, h3 {
+    color: #004c97;
+    font-size: 1.5em;
+}
+
+.stButton>button {
+    background-color: #004c97;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1em;
+}
+
+.stButton>button:hover {
+    background-color: #003366;
+    transform: scale(1.05);
+}
+
+.stTextInput>div>input, .stSelectbox>div>div {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    transition: border 0.3s;
+    font-size: 1em;
+}
+
+.stTextInput>div>input:focus, .stSelectbox>div>div:focus {
+    border: 1px solid #004c97;
+}
+
+.stRadio>div>div, .stDateInput>div>div {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    transition: border 0.3s;
+    font-size: 1em;
+}
+
+.stRadio>div>div:focus, .stDateInput>div>div:focus {
+    border: 1px solid #004c97;
+}
+
+.stMarkdown {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.stSidebar {
+    background-color: #f8f8f8;
+    color: #333;
+    width: 300px;
+    padding: 30px;
+    border-right: 2px solid #ddd;
+}
+
+.stSidebar .css-1d391kg {
+    color: #333;
+    font-size: 18px;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.stSidebar .css-1d391kg:hover {
+    background-color: #e0e0e0;
+    color: #000;
+    border-radius: 5px;
+}
+
+.stSidebar .css-18ni7ap {
+    background-color: #004c97;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.stApp .main {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.1em;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    background-color: #004c97;
+    color: #fff;
+    font-size: 1em;
+}
+
+.css-1d391kg label {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.css-1d391kg label:hover {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.css-18ni7ap {
+    background-color: #004c97;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+}
