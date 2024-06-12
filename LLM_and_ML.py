@@ -50,7 +50,7 @@ def ml_prediction_page():
     age_group_value = age_mapping[age_group]
     gender = st.selectbox('Jenis kelamin:', ['Laki-laki', 'Perempuan'], help="Pilih jenis kelamin pasien")
     gender_value = 1 if gender == 'Laki-laki' else 0
-    branch = st.selectbox('Cabang RS Siloam:', ['RSMA', 'RSMD', 'RSMS'], help="Pilih cabang rumah sakit")
+    branch = st.selectbox('Cabang RS :', ['RSMA', 'RSMD', 'RSMS'], help="Pilih cabang rumah sakit")
     branch_values = {'branch_RSMA': 0, 'branch_RSMD': 0, 'branch_RSMS': 0}
     branch_values[branch] = 1
     payment = st.selectbox('Metode Pembayaran:', ['Asuransi', 'Pribadi'], help="Pilih metode pembayaran")
@@ -257,7 +257,7 @@ def help_page():
     - Nama Pasien: "Budi"
     - Umur: "19-30"
     - Jenis Kelamin: "Laki-laki"
-    - Cabang RS Siloam: "RSMA"
+    - Cabang RS : "RSMA"
     - Metode Pembayaran: "Asuransi"
     - Tipe Perawatan: "Rawat Jalan"
     - Tipe Kamar: "VIP"
